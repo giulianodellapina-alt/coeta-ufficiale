@@ -10823,15 +10823,7 @@ export default function App() {
           }}
         />
 
-        <VerbaleAIDialog
-          open={isVerbaleDialogOpen}
-          onOpenChange={setIsVerbaleDialogOpen}
-          onSave={saveReportFromAI}
-          reports={reports}
-          guards={guards}
-          currentGuard={currentGuard}
-          noTrigger
-        />
+       
 
         <VerbaleSanzioneDialog
           open={isVerbaleSanzioneDialogOpen}
