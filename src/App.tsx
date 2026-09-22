@@ -1,7 +1,7 @@
 import { RadarLateralPanel } from "./RadarLateralPanel";
 import React, { useState, useEffect, ChangeEvent, useRef } from "react";
 import { createPortal } from "react-dom";
-import { VerbaleAIDialog } from "./VerbaleAIDialog";
+
 import { VerbaleSanzioneDialog } from "./components/VerbaleSanzioneDialog";
 import { generateVerbalePDF } from "./lib/pdfUtils";
 import { EmailFeedbackModal, EmailFeedbackState } from "./components/EmailFeedbackModal";
