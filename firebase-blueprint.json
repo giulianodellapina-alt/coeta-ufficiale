@@ -1,0 +1,465 @@
+{
+  "entities": {
+    "Report": {
+      "title": "Verbale",
+      "description": "Rapporto di servizio e sopralluogo delle guardie",
+      "type": "object",
+      "properties": {
+        "numeroVerbale": { "type": "string" },
+        "data": { "type": "string" },
+        "oraInizio": { "type": "string" },
+        "oraFine": { "type": "string" },
+        "tipoVerbale": { "type": "string", "enum": ["zoofila", "ittica", "venatoria"] },
+        "verbalizzanti": { "type": "string" },
+        "comune": { "type": "string" },
+        "provincia": { "type": "string" },
+        "localita": { "type": "string" },
+        "motivoSegnalazione": { "type": "string" },
+        "soggettoNome": { "type": "string" },
+        "soggettoNatoA": { "type": "string" },
+        "soggettoIl": { "type": "string" },
+        "soggettoResidenteA": { "type": "string" },
+        "soggettoProv": { "type": "string" },
+        "soggettoIndirizzo": { "type": "string" },
+        "soggettoDocumentoTipo": { "type": "string" },
+        "soggettoDocumentoNumero": { "type": "string" },
+        "soggettoDocScadenza": { "type": "string" },
+        "tipoAnimale": { "type": "string" },
+        "esito": { "type": "string", "enum": ["rifiuto", "consenso"] },
+        "constatazioni": { "type": "string" },
+        "chips": { "type": "array" },
+        "creatoAl": { "type": "string", "format": "date-time" },
+        "creatoDa": { "type": "string" },
+        "creatoDaNome": { "type": "string" },
+        "firmaGuardia": { "type": "string" },
+        "firmaTrasgressore": { "type": "string" },
+        "rifiutaFirma": { "type": "boolean" },
+        "giorniRegolarizzazione": { "type": "number" },
+        "numeroAnimali": { "type": "string" },
+        "proprietarioPossessore": { "type": "string", "enum": ["proprietario", "possessore"] }
+      }
+    },
+    "Vehicle": {
+      "title": "Mezzo",
+      "description": "Scheda tecnica completa del veicolo per gestione flotta",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "plate": { "type": "string" },
+        "status": { "type": "string", "enum": ["available", "maintenance", "in_use"] },
+        "fuelType": { "type": "string" },
+        "registrationDate": { "type": "string" },
+        "revisionExpiry": { "type": "string" },
+        "insuranceExpiry": { "type": "string" },
+        "lastOilChangeKm": { "type": "number" },
+        "nextOilChangeKm": { "type": "number" },
+        "lastTyreChangeDate": { "type": "string" },
+        "assignedTo": { "type": "string" },
+        "assignedToName": { "type": "string" },
+        "maintenanceReason": { "type": "string" },
+        "maintenanceHistory": { "type": "array" }
+      }
+    },
+    "VehicleLog": {
+      "title": "Diario di Bordo",
+      "description": "Registro dell'uso dei mezzi",
+      "type": "object",
+      "properties": {
+        "vehicleId": { "type": "string" },
+        "vehicleName": { "type": "string" },
+        "guardId": { "type": "string" },
+        "startKm": { "type": "number" },
+        "endKm": { "type": "number" },
+        "startTime": { "type": "string" },
+        "endTime": { "type": "string" },
+        "date": { "type": "string" }
+      }
+    },
+    "EnvironmentalReport": {
+      "title": "Segnalazione Ambientale",
+      "description": "Segnalazioni di reati ambientali",
+      "type": "object",
+      "properties": {
+        "type": { "type": "string" },
+        "description": { "type": "string" },
+        "reporterId": { "type": "string" },
+        "reporterMatricola": { "type": "string" },
+        "reporterName": { "type": "string" },
+        "reportNumber": { "type": "number" },
+        "status": { "type": "string" },
+        "photo": { "type": "string" },
+        "coords": { "type": "object" },
+        "address": { "type": "string" },
+        "notes": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      }
+    },
+    "Guard": {
+      "title": "Guardia",
+      "description": "Anagrafica pubblica e operativa della guardia",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "surname": { "type": "string" },
+        "matricola": { "type": "string" },
+        "role": { "type": "string", "enum": ["guardia", "responsabile", "admin"] },
+        "qualifications": { "type": "array" },
+        "isTracingAuthorized": { "type": "boolean" },
+        "isAvailable": { "type": "boolean" },
+        "lastLocation": {
+          "type": "object",
+          "properties": {
+            "lat": { "type": "number" },
+            "lng": { "type": "number" },
+            "updatedAt": { "type": "string", "format": "date-time" }
+          }
+        }
+      }
+    },
+    "GuardPrivateInfo": {
+      "title": "Dati Sensibili Guardia",
+      "description": "Dati personali, fisici e vestiario protetti",
+      "type": "object",
+      "properties": {
+        "birthDate": { "type": "string" },
+        "birthPlace": { "type": "string" },
+        "codiceFiscale": { "type": "string" },
+        "address": { "type": "string" },
+        "city": { "type": "string" },
+        "cap": { "type": "string" },
+        "comune": { "type": "string" },
+        "province": { "type": "string" },
+        "phone": { "type": "string" },
+        "cellulare": { "type": "string" },
+        "email": { "type": "string" },
+        "titoloStudio": { "type": "string" },
+        "linguaConosciuta": { "type": "string" },
+        "statura": { "type": "string" },
+        "tipoCapelli": { "type": "string" },
+        "coloreCapelli": { "type": "string" },
+        "coloreOcchi": { "type": "string" },
+        "tagliaCalzoni": { "type": "string" },
+        "tagliaCamicia": { "type": "string" },
+        "misuraScarponi": { "type": "string" },
+        "tagliaMaglione": { "type": "string" },
+        "grado": { "type": "string" },
+        "settore": { "type": "string" },
+        "passaggioGrado": { "type": "string" },
+        "gradoAssunto": { "type": "string" },
+        "dataSospensione": { "type": "string" },
+        "motivoSospensione": { "type": "string" },
+        "matricolaOperativa": { "type": "string" },
+        "dataAllontanamento": { "type": "string" },
+        "dataRiammissione": { "type": "string" },
+        "motivoAllontanamento": { "type": "string" }
+      }
+    },
+    "Mission": {
+      "title": "Missione",
+      "description": "Comando operativo inviato dalla centrale alla guardia",
+      "type": "object",
+      "properties": {
+        "guardId": { "type": "string" },
+        "guardName": { "type": "string" },
+        "address": { "type": "string" },
+        "description": { "type": "string" },
+        "priority": { "type": "string", "enum": ["low", "medium", "high", "emergency"] },
+        "status": { "type": "string", "enum": ["pending", "accepted", "completed", "cancelled"] },
+        "assignedBy": { "type": "string" },
+        "assignedByName": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "acceptedAt": { "type": "string", "format": "date-time" },
+        "completedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "UsefulContact": {
+      "title": "Numero Utile",
+      "description": "Contatti di emergenza e utilità per il territorio",
+      "type": "object",
+      "properties": {
+        "municipality": { "type": "string" },
+        "category": { "type": "string", "enum": ["Emergenza", "Veterinari", "Farmacie", "Forze dell'Ordine", "Toelettatura", "Altro"] },
+        "title": { "type": "string" },
+        "phone": { "type": "string" },
+        "address": { "type": "string" },
+        "notes": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "SosDutyShift": {
+      "title": "Turno Responsabile SOS",
+      "description": "Gestione della rotazione dei responsabili per le emergenze",
+      "type": "object",
+      "properties": {
+        "guardId": { "type": "string" },
+        "guardName": { "type": "string" },
+        "matricola": { "type": "string" },
+        "date": { "type": "string" },
+        "order": { "type": "number" }
+      }
+    }
+    },
+    "AccessLog": {
+      "title": "Registro Accessi e Modifiche",
+      "description": "Scatola nera per il tracciamento di accessi e modifiche al sistema",
+      "type": "object",
+      "properties": {
+        "timestamp": { "type": "string", "format": "date-time" },
+        "action": { "type": "string" },
+        "details": { "type": "object" },
+        "userMatricola": { "type": "string" },
+        "userName": { "type": "string" },
+        "userId": { "type": "string" },
+        "type": { "type": "string", "enum": ["access", "create", "update", "delete", "system"] }
+      }
+    },
+    "AnimaliaCensus": {
+      "title": "Censimento Animalia",
+      "description": "Programma per il conteggio e tracciamento fotografico degli animali (gatti delle colonie feline, cani nei recinti e uccelli in gabbia)",
+      "type": "object",
+      "properties": {
+        "specie": { "type": "string", "enum": ["gatti", "cani", "uccelli"] },
+        "nomeColoniaZona": { "type": "string" },
+        "localita": { "type": "string" },
+        "conteggioConfermato": { "type": "number" },
+        "dettagliConteggio": { "type": "string" },
+        "photo": { "type": "string" },
+        "coords": { "type": "object" },
+        "operatoreMatricola": { "type": "string" },
+        "operatoreNome": { "type": "string" },
+        "note": { "type": "string" },
+        "creatoAl": { "type": "string", "format": "date-time" }
+      }
+    },
+    "EmergencyCall": {
+      "title": "Chiamata Centrale Operativa",
+      "description": "Chiamate ed emergenze centralizzate stile 112/118 con storico log PG",
+      "type": "object",
+      "properties": {
+        "callerName": { "type": "string" },
+        "callerPhone": { "type": "string" },
+        "localita": { "type": "string" },
+        "lat": { "type": "number" },
+        "lng": { "type": "number" },
+        "description": { "type": "string" },
+        "priority": { "type": "string", "enum": ["bassa", "media", "alta", "emergenza"] },
+        "status": { "type": "string", "enum": ["in_attesa", "pattuglia", "inoltrata", "risolto"] },
+        "assignedGuardId": { "type": "string" },
+        "assignedGuardName": { "type": "string" },
+        "assignedGuardPhone": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "notes": { "type": "string" },
+        "auditTrail": { "type": "array" }
+      }
+    },
+    "CanineCertificate": {
+      "title": "Certificato Iscrizione Anagrafe Canina",
+      "description": "Certificati regionali d'iscrizione all'anagrafe canina toscana",
+      "type": "object",
+      "properties": {
+        "proprietarioCognome": { "type": "string" },
+        "proprietarioNome": { "type": "string" },
+        "proprietarioLuogoNascita": { "type": "string" },
+        "proprietarioDataNascita": { "type": "string" },
+        "proprietarioCodiceFiscale": { "type": "string" },
+        "proprietarioIndirizzo": { "type": "string" },
+        "proprietarioTelefono": { "type": "string" },
+        "caneNome": { "type": "string" },
+        "caneDataNascita": { "type": "string" },
+        "caneSesso": { "type": "string" },
+        "caneRazza": { "type": "string" },
+        "caneMantello": { "type": "string" },
+        "caneTaglia": { "type": "string" },
+        "canePelo": { "type": "string" },
+        "caneSegniParticolari": { "type": "string" },
+        "caneNote": { "type": "string" },
+        "caneMicrochip": { "type": "string" },
+        "caneImpiantatoIl": { "type": "string" },
+        "caneSitoImpianto": { "type": "string" },
+        "rifArchivioFisico": { "type": "string" },
+        "matricolaCertificato": { "type": "string" },
+        "luogoDetenzione": { "type": "string" },
+        "veterinarioNome": { "type": "string" },
+        "dataRilascio": { "type": "string" },
+        "dataMovimento": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "createdBy": { "type": "string" },
+        "createdByGuardName": { "type": "string" }
+      }
+    },
+    "TerritoryControl": {
+      "title": "Controllo sul Territorio",
+      "description": "Modulo per il tracciamento rapido del controllo di soggetti sul territorio",
+      "type": "object",
+      "properties": {
+        "numeroControllo": { "type": "string" },
+        "data": { "type": "string" },
+        "ora": { "type": "string" },
+        "comune": { "type": "string" },
+        "localita": { "type": "string" },
+        "guardie": { "type": "string" },
+        "settore": { "type": "string", "enum": ["zoofila", "ittica", "venatoria", "ambientale"] },
+        "specieRazza": { "type": "string" },
+        "microchip": { "type": "string" },
+        "nomeSoggetto": { "type": "string" },
+        "documentoEsibito": { "type": "string" },
+        "esito": { "type": "string", "enum": ["regolare", "con_prescrizioni", "violazione"] },
+        "prescrizioneTesto": { "type": "string" },
+        "giorniAdeguamento": { "type": "number" },
+        "note": { "type": "string" },
+        "image": { "type": "string" },
+        "creatoAl": { "type": "string", "format": "date-time" },
+        "creatoDa": { "type": "string" },
+        "creatoDaNome": { "type": "string" }
+      }
+    },
+    "ForbiddenDrug": {
+      "title": "Farmaco Vietato o Pericoloso",
+      "description": "Elenco di farmaci o medicinali vietati o pericolosi per animali senza supervisione veterinaria",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "category": { "type": "string" },
+        "dangerLevel": { "type": "string" },
+        "notes": { "type": "string" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "updatedBy": { "type": "string" }
+      }
+    },
+    "AnimalSymptom": {
+      "title": "Sintomo o Segnale di Maltrattamento",
+      "description": "Sintomi comuni di malattie o segnali comportamentali e fisici che indicano possibile maltrattamento",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "type": { "type": "string", "enum": ["malattia", "maltrattamento"] },
+        "description": { "type": "string" },
+        "whatToDo": { "type": "string" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "updatedBy": { "type": "string" }
+      }
+    },
+    "SanctionReport": {
+      "title": "Verbale Sanzionatorio",
+      "description": "Verbale di accertamento e contestazione di illecito amministrativo (Legge 689/1981)",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "numeroVerbale": { "type": "string" },
+        "data": { "type": "string" },
+        "oraInizio": { "type": "string" },
+        "verbalizzantiMatricole": { "type": "string" },
+        "verbalizzantiQualifica": { "type": "string" },
+        "dataAccertamento": { "type": "string" },
+        "oraAccertamento": { "type": "string" },
+        "localita": { "type": "string" },
+        "comune": { "type": "string" },
+        "provincia": { "type": "string" },
+        "gpsRef": { "type": "string" },
+        "soggettoNome": { "type": "string" },
+        "soggettoNatoA": { "type": "string" },
+        "soggettoNatoProv": { "type": "string" },
+        "soggettoNatoIl": { "type": "string" },
+        "soggettoResidenteA": { "type": "string" },
+        "soggettoResidenteProv": { "type": "string" },
+        "soggettoResidenteIndirizzo": { "type": "string" },
+        "soggettoResidenteCivico": { "type": "string" },
+        "soggettoDocumentoTipo": { "type": "string" },
+        "soggettoDocumentoNumero": { "type": "string" },
+        "soggettoDocumentoRilasciatoDa": { "type": "string" },
+        "soggettoDocumentoRilasciatoIl": { "type": "string" },
+        "trasgreditoLeggeRegolamento": { "type": "string" },
+        "trasgreditoArt": { "type": "string" },
+        "sanzionatoLeggeRegolamento": { "type": "string" },
+        "sanzionatoArt": { "type": "string" },
+        "sanzioneMin": { "type": "number" },
+        "sanzioneMax": { "type": "number" },
+        "motiviFatti": { "type": "string" },
+        "contestazioneTipo": { "type": "string", "enum": ["immediata", "differita"] },
+        "sequestroAmministrativo": { "type": "boolean" },
+        "pagamentoMisuraRidotta": { "type": "number" },
+        "speseNotifica": { "type": "number" },
+        "pagamentoTotale": { "type": "number" },
+        "metodoPagamento": { "type": "string", "enum": ["regione_toscana", "comune_carrara", "altro_comune"] },
+        "creatoAl": { "type": "string", "format": "date-time" },
+        "creatoDa": { "type": "string" },
+        "creatoDaNome": { "type": "string" }
+      }
+    }
+  },
+  "firestore": {
+    "/sanction_reports/{reportId}": {
+      "schema": "SanctionReport",
+      "description": "Verbali sanzionatori di accertamento e contestazione illeciti amministrativi"
+    },
+    "/territory_controls/{controlId}": {
+      "schema": "TerritoryControl",
+      "description": "Controlli sul territorio effettuati sul campo"
+    },
+    "/access_logs/{logId}": {
+      "schema": "AccessLog",
+      "description": "Scatola nera per il tracciamento degli accessi e delle modifiche"
+    },
+    "/canine_certificates/{certId}": {
+      "schema": "CanineCertificate",
+      "description": "Archivio certificati d'iscrizione all'anagrafe canina per microchip"
+    },
+    "/sos_duty_shifts/{shiftId}": {
+      "schema": "SosDutyShift",
+      "description": "Calendario dei responsabili di turno per l'SOS"
+    },
+    "/contacts/{contactId}": {
+      "schema": "UsefulContact",
+      "description": "Numeri utili raggruppati per comune"
+    },
+    "/missions/{missionId}": {
+      "schema": "Mission",
+      "description": "Comandi operativi e missioni assegnate"
+    },
+    "/guards/{guardId}": {
+      "schema": "Guard",
+      "description": "Anagrafica pubblica"
+    },
+    "/guards/{guardId}/private/data": {
+      "schema": "GuardPrivateInfo",
+      "description": "Dati sensibili e vestiario protetti"
+    },
+    "/reports/{reportId}": {
+      "schema": "Report",
+      "description": "Collezione dei verbali archiviati"
+    },
+    "/user_sessions/{uid}": {
+      "schema": "UserSession",
+      "description": "Sessioni attive degli utenti"
+    },
+    "/vehicles/{vehicleId}": {
+      "schema": "Vehicle",
+      "description": "Anagrafica mezzi"
+    },
+    "/vehicle_logs/{logId}": {
+      "schema": "VehicleLog",
+      "description": "Registro uso mezzi"
+    },
+    "/environmental_reports/{reportId}": {
+      "schema": "EnvironmentalReport",
+      "description": "Segnalazioni ambientali"
+    },
+    "/animalia_census/{censusId}": {
+      "schema": "AnimaliaCensus",
+      "description": "Censimenti fotografici di colonie feline ed altri animali"
+    },
+    "/emergency_calls/{callId}": {
+      "schema": "EmergencyCall",
+      "description": "Chiamate ed emergenze centralizzate stile 112/118"
+    },
+    "/forbidden_drugs/{drugId}": {
+      "schema": "ForbiddenDrug",
+      "description": "Elenco di farmaci vietati o pericolosi per animali"
+    },
+    "/animal_symptoms/{symptomId}": {
+      "schema": "AnimalSymptom",
+      "description": "Sintomi comuni di malattie e indicatori di maltrattamento"
+    }
+  }
+}
