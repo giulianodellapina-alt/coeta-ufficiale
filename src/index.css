@@ -1,0 +1,512 @@
+@import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
+
+@keyframes loading {
+  0% { transform: translateX(-100%); width: 30%; }
+  50% { transform: translateX(150%); width: 60%; }
+  100% { transform: translateX(-100%); width: 30%; }
+}
+
+@keyframes sos-blink {
+  0% { background-color: rgb(153, 27, 27); box-shadow: 0 0 10px rgba(239, 68, 68, 0.4); }
+  50% { background-color: rgb(220, 38, 38); box-shadow: 0 0 30px rgba(239, 68, 68, 0.8); border-color: white; }
+  100% { background-color: rgb(153, 27, 27); box-shadow: 0 0 10px rgba(239, 68, 68, 0.4); }
+}
+
+.animate-sos-blink {
+  animation: sos-blink 0.6s infinite;
+}
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+@layer base {
+  body {
+    background-color: #0f172a;
+    color: #e2e8f0;
+    overscroll-behavior: none;
+    overflow: hidden;
+  }
+}
+
+.chip-box {
+  display: inline-block;
+  width: 4mm;
+  height: 5.5mm;
+  border: 1pt solid black;
+  text-align: center;
+  line-height: 5.5mm;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 10pt;
+  margin-right: 0.5mm;
+  background-color: white;
+  color: black;
+  flex-shrink: 0;
+}
+
+/* Custom styles for Leaflet */
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.75rem;
+}
+
+/* Radar Large Popup */
+.radar-large-popup .leaflet-popup-content-wrapper {
+  background: transparent !important;
+  color: white !important;
+  border-radius: 0px !important;
+  padding: 0 !important;
+  width: auto !important;
+  min-width: 270px !important;
+  max-width: 290px !important;
+  box-shadow: none !important;
+}
+
+.radar-large-popup .leaflet-popup-content {
+  margin: 0 !important;
+}
+
+.radar-large-popup .leaflet-popup-tip {
+  background: #020617 !important;
+}
+
+.custom-div-icon {
+  background: none !important;
+  border: none !important;
+}
+
+/* Calendar transitions */
+.calendar-fade-enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
+.calendar-fade-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms, transform 300ms;
+}
+
+/* Custom Scrollbar for Dark Mode */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+::-webkit-scrollbar-track {
+  background: #0f172a;
+  border-left: 1px solid rgba(51, 65, 85, 0.4);
+}
+::-webkit-scrollbar-thumb {
+  background: #ea580c;
+  border: 3px solid #0f172a;
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #f97316;
+}
+
+/* Map Popup Styling - High Contrast Clean Theme */
+.leaflet-popup-content-wrapper {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border: 1px solid #cbd5e1 !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.25), 0 8px 10px -6px rgba(0, 0, 0, 0.2) !important;
+  border-radius: 12px !important;
+  padding: 0 !important;
+}
+.leaflet-popup-content {
+  margin: 12px !important;
+  line-height: normal !important;
+  color: #0f172a !important;
+}
+.leaflet-popup-tip {
+  background: #ffffff !important;
+  border: 1px solid #cbd5e1 !important;
+}
+
+/* Print Styles */
+@media print {
+  @page {
+    margin: 0.5cm;
+    size: A4 portrait;
+  }
+
+  /* Total Reset for Print */
+  html, body {
+    background: white !important;
+    color: black !important;
+    font-family: Arial, sans-serif !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    font-size: 12pt !important;
+  }
+
+  /* Hide interactive elements and the main application root */
+  #root, 
+  header, 
+  footer, 
+  nav, 
+  button, 
+  [role="button"],
+  .print\:hidden,
+  .DialogOverlay, 
+  .DialogClose,
+  .DialogFooter,
+  .DialogDescription {
+    display: none !important;
+  }
+
+  /* Ensure the Dialog Portal is visible and layout-friendly for print */
+  [data-radix-portal] {
+    position: static !important;
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  [role="dialog"] {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    display: block !important;
+    background: white !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    transform: none !important;
+    overflow: visible !important;
+    border: none !important;
+  }
+
+  .printable-content {
+    display: block !important;
+    width: 100% !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: white !important;
+    color: black !important;
+    visibility: visible !important;
+  }
+
+  .printable-content * {
+    visibility: visible !important;
+    color: black !important;
+    background: transparent !important;
+  }
+
+  /* Handling font sizes for print legibility - Word-like */
+  .text-lg { font-size: 14pt !important; }
+  .text-base { font-size: 12pt !important; }
+  .text-sm { font-size: 11pt !important; }
+  .text-xs { font-size: 10pt !important; }
+  
+  .header-guardie-ekoclub { font-size: 15pt !important; font-weight: bold !important; }
+  .header-nucleo-massa { font-size: 10pt !important; font-weight: bold !important; }
+  .header-assoc-protez { font-size: 8pt !important; }
+  .header-guardie-giurate { font-size: 9.5pt !important; font-weight: bold !important; }
+  .header-recapito { font-size: 8pt !important; }
+
+  /* Logo sizing for print */
+  .print-logo-container, .print-logo-img {
+    width: 25mm !important;
+    height: 25mm !important;
+    min-width: 25mm !important;
+    min-height: 25mm !important;
+    max-width: 25mm !important;
+    max-height: 25mm !important;
+    object-fit: contain !important;
+  }
+
+  /* Section spacing compacting */
+  .space-y-12, .space-y-10, .space-y-8, .space-y-6, .space-y-4 {
+    margin-top: 0.15rem !important;
+    margin-bottom: 0.15rem !important;
+  }
+  
+  .gap-12, .gap-8, .gap-6 {
+    gap: 0.25rem !important;
+  }
+
+  .p-12 { padding: 0.25rem !important; }
+  .p-8 { padding: 0.25rem !important; }
+  .p-6 { padding: 0.2rem !important; }
+  .mb-8 { margin-bottom: 0.25rem !important; }
+  .pb-8 { padding-bottom: 0.25rem !important; }
+  .pb-6 { padding-bottom: 0.2rem !important; }
+  .mt-12 { margin-top: 0.5rem !important; }
+
+  /* Specific OSINT Print classes */
+  .osint-print-compact {
+    font-size: 9pt !important;
+    line-height: 1.1 !important;
+  }
+  
+  .osint-print-compact p {
+    margin-bottom: 2pt !important;
+  }
+
+  .osint-print-image {
+    max-height: 4.5cm !important;
+    width: auto !important;
+  }
+
+  /* Table improvements */
+  table { 
+    border-collapse: collapse !important;
+    width: 100% !important;
+    margin-bottom: 0.5em !important;
+  }
+  th, td { 
+    border: 0.5pt solid black !important;
+    padding: 3pt !important;
+  }
+
+  /* Force signatures to look like ink - but don't cap the logo */
+  .signature-block img {
+    max-height: 70px !important;
+    filter: contrast(200%) grayscale(100%) !important;
+  }
+  
+  .print-logo-img {
+    max-height: none !important;
+    filter: none !important;
+  }
+  /* Prevent page breaks inside cards or signatures */
+  .printable-body > div, 
+  section, 
+  .signature-block {
+    page-break-inside: avoid !important;
+  }
+
+  /* Remove fixed heights */
+  .min-h-\[300px\], .min-h-\[250px\], .min-h-\[200px\] {
+    min-height: auto !important;
+  }
+  
+  /* Show only global print portal and hide everything else */
+  body.is-printing-active #root,
+  body.is-printing-active header,
+  body.is-printing-active footer,
+  body.is-printing-active nav,
+  body.is-printing-active button,
+  body.is-printing-active .dialog,
+  body.is-printing-active [role="dialog"],
+  body.is-printing-active [data-radix-portal],
+  body.is-printing-active .fixed,
+  body.is-printing-active [class*="fixed"],
+  body.is-printing-active [class*="absolute"]:not(#global-print-portal *) {
+    display: none !important;
+  }
+  
+  body.is-printing-active > *:not(#global-print-portal) {
+    display: none !important;
+  }
+  
+  body.is-printing-active #global-print-portal {
+    display: block !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    background: white !important;
+    color: black !important;
+    z-index: 99999999 !important;
+  }
+}
+
+/* Screen styles for print portal fallback (hidden by default) */
+#global-print-portal {
+  display: none;
+}
+
+body.is-printing-active {
+  font-size: 9.5pt !important;
+  overflow: auto !important;
+  height: auto !important;
+  min-height: 100vh !important;
+  position: relative !important;
+  overscroll-behavior: auto !important;
+}
+
+body.is-printing-active > *:not(#global-print-portal) {
+  display: none !important;
+}
+
+body.is-printing-active #global-print-portal {
+  display: block !important;
+  position: absolute !important;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: auto;
+  background: #f1f5f9; /* Slate background on screen */
+  color: black;
+  z-index: 99999999;
+  padding: 30px 15px;
+  box-sizing: border-box;
+}
+
+/* On screen: render printed form inside a centered paper-like box */
+body.is-printing-active #global-print-portal > div {
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+  background: white;
+  padding: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+@media (min-width: 640px) {
+  body.is-printing-active #global-print-portal > div {
+    padding: 30px;
+  }
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 8mm 12mm 8mm 12mm; /* Tighter page margins for printing */
+  }
+  body.is-printing-active #global-print-portal {
+    background: white !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  body.is-printing-active #global-print-portal > div {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+}
+
+/* Custom print classes for perfect field swapping and removing grey borders */
+.no-print {
+  /* Visible on screen by default */
+}
+.print-only {
+  display: none !important; /* Hidden on screen by default */
+}
+span.print-only {
+  display: none !important; /* Hidden on screen by default */
+}
+
+body.is-printing-active .no-print:not(.print-preview-header) {
+  display: none !important;
+}
+body.is-printing-active .print-preview-header {
+  display: flex !important;
+}
+@media print {
+  .print-preview-header,
+  body.is-printing-active .print-preview-header {
+    display: none !important;
+  }
+}
+body.is-printing-active .print-only {
+  display: block !important;
+}
+body.is-printing-active span.print-only {
+  display: inline-block !important;
+}
+
+/* Force strip borders, shadows and radii from printable sheets when printing */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 6mm 8mm 6mm 8mm;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+  span.print-only {
+    display: inline-block !important;
+  }
+  
+  #printable-verbale,
+  [id^="printable-verbale-"] {
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+  }
+}
+
+body.is-printing-active #printable-verbale,
+body.is-printing-active [id^="printable-verbale-"] {
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+/* Pulsing Glowing Dots for POIs */
+@keyframes pulse-cyan {
+  0% { transform: scale(0.65); opacity: 0.9; box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.7); }
+  70% { transform: scale(1.4); opacity: 0; box-shadow: 0 0 0 10px rgba(6, 182, 212, 0); }
+  100% { transform: scale(0.65); opacity: 0; box-shadow: 0 0 0 0 rgba(6, 182, 212, 0); }
+}
+@keyframes pulse-blue {
+  0% { transform: scale(0.65); opacity: 0.9; box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.7); }
+  70% { transform: scale(1.4); opacity: 0; box-shadow: 0 0 0 10px rgba(37, 99, 235, 0); }
+  100% { transform: scale(0.65); opacity: 0; box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+}
+@keyframes pulse-skyblue {
+  0% { transform: scale(0.65); opacity: 0.9; box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.7); }
+  70% { transform: scale(1.4); opacity: 0; box-shadow: 0 0 0 10px rgba(14, 165, 233, 0); }
+  100% { transform: scale(0.65); opacity: 0; box-shadow: 0 0 0 0 rgba(14, 165, 233, 0); }
+}
+@keyframes pulse-emerald {
+  0% { transform: scale(0.65); opacity: 0.9; box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+  70% { transform: scale(1.4); opacity: 0; box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+  100% { transform: scale(0.65); opacity: 0; box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+@keyframes pulse-purple {
+  0% { transform: scale(0.65); opacity: 0.9; box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.7); }
+  70% { transform: scale(1.4); opacity: 0; box-shadow: 0 0 0 10px rgba(139, 92, 246, 0); }
+  100% { transform: scale(0.65); opacity: 0; box-shadow: 0 0 0 0 rgba(139, 92, 246, 0); }
+}
+
+.glowing-pulse-vet {
+  animation: pulse-cyan 1.6s infinite;
+}
+.glowing-pulse-law {
+  animation: pulse-blue 1.6s infinite;
+}
+.glowing-pulse-local {
+  animation: pulse-skyblue 1.6s infinite;
+}
+.glowing-pulse-pharm {
+  animation: pulse-emerald 1.6s infinite;
+}
+.glowing-pulse-asl {
+  animation: pulse-purple 1.6s infinite;
+}
+
+
